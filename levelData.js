@@ -1,16 +1,3 @@
-/*
-  FIRST CELL TEMPLATE
-      { cellID: "0-0-0-0", cellValue: 1 },
-      { cellID: "0-0-0-1", cellValue: 2 },
-      { cellID: "0-0-0-2", cellValue: 3 },
-      { cellID: "0-0-1-0", cellValue: 4 },
-      { cellID: "0-0-1-1", cellValue: 5 },
-      { cellID: "0-0-1-2", cellValue: 6 },
-      { cellID: "0-0-2-0", cellValue: 7 },
-      { cellID: "0-0-2-1", cellValue: 8 },
-      { cellID: "0-0-2-2", cellValue: 9 },
-*/
-
 // Cell ID: ("X-X-X-X" / "boardRow-boardlCol-cellRow-cellCol")
 
 const levels = {
