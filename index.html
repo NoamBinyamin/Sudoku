@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>Sudoku by Noam</title>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="dropdown">
+        <div class="select">
+          <span class="selected">Level 1</span>
+          <div class="caret"></div>
+        </div>
+        <ul class="menu"></ul>
+      </div>
+      <div class="level-difficulty">Difficulty: Easy</div>
+      <div class="game-progress">Progress: 100%</div>
+    </div>
+
+    <div class="board-container">
+      <div id="board">board</div>
+    </div>
+    <div class="credit">Sudoku By Noam</div>
+  </body>
+  <script type="module" src="code.js"></script>
+</html>
+
+<!--
+Things to to code:
+1. Auto Solver (?)
+-->
