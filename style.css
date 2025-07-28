@@ -134,11 +134,11 @@ body {
   text-align: center;
 }
 
-#credit {
+.credit {
   padding-top: 5px;
 }
 
-#luck {
+.luck {
   font-size: 30px;
   padding: 20px;
 }
