@@ -129,17 +129,18 @@ body {
 }
 
 .description {
-  padding: 30px;
+  padding: 15px;
   font-size: 21px;
   text-align: center;
 }
 
 .credit {
   padding-top: 5px;
+  font-size: 12px;
 }
 
 .luck {
-  font-size: 30px;
+  font-size: 25px;
   padding: 20px;
 }
 
