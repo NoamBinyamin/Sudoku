@@ -5,9 +5,16 @@ import levels from "./levelData.js";
 // Starting the game - Initial values:
 let clickedCellDiv = null; // Setting the Click event to null
 let choosedCellDiv = null;
+let mistakeFlag = null;
 let gameBoard = createNewBoard(); // creating the board stracture and the HTML
 boardLevelLoader(1, gameBoard); // Loads level 1 as the default level
 dropdownList();
+
+// Solve button
+const solveButton = document.querySelector(".solve-button");
+solveButton.addEventListener("click", () => {
+  autoSolver(gameBoard);
+});
 
 function createNewBoard() {
   /*
@@ -340,6 +347,7 @@ function BoardCheck(board) {
         ...board[i][j].subGrid[2],
       ];
       mergedCell = mergedCell.filter((empty) => empty !== ""); // Removing empty cells
+      mergedCell = mergedCell.filter((empty) => empty !== null); // Removing null cells
       if (new Set(mergedCell).size !== mergedCell.length) {
         // Checks if the set and the array has the same length
         badCells.push(`${i}-${j}`);
@@ -355,6 +363,7 @@ function BoardCheck(board) {
         }
       }
       mergedCol = mergedCol.filter((empty) => empty !== ""); // Removing empty cells
+      mergedCol = mergedCol.filter((empty) => empty !== null); // Removing null cells
       if (new Set(mergedCol).size !== mergedCol.length) {
         // Checks if the set and the array has the same length
         badCols.push(`${i}-${j}`);
@@ -372,6 +381,7 @@ function BoardCheck(board) {
         }
       }
       mergedRow = mergedRow.filter((empty) => empty !== ""); // Removing empty cells
+      mergedRow = mergedRow.filter((empty) => empty !== null); // Removing empty cells
       if (new Set(mergedRow).size !== mergedRow.length) {
         // Checks if the set and the array has the same length
         badRows.push(`${i}-${j}`);
@@ -382,12 +392,15 @@ function BoardCheck(board) {
 
   // Sum up the mistakes in the board
   if (badRows.length > 0 || badCells.length > 0 || badCols.length > 0) {
+    mistakeFlag = 1;
     console.log("Mistake Detected!");
     MistakesMarker(badCells, badCols, badRows);
-    return;
+    return mistakeFlag;
   }
   gameProgress();
-  console.log("Board Check Completed Without Issues");
+  mistakeFlag = null;
+  // console.log("Board Check Completed Without Issues");
+  return mistakeFlag;
 }
 
 function MistakesMarker(badCells = [], badCols = [], badRows = []) {
@@ -524,4 +537,67 @@ function gameProgress() {
       origin: { y: -0.3 },
     });
   }
+}
+
+function autoSolver(board) {
+  // Getting into an array the empty sub-cells
+  const emptySubCells = Array.from(
+    document.querySelectorAll(".sub-cell")
+  ).filter((div) => div.textContent.trim() === "");
+
+  // Initial values
+  let i = 0;
+  let cellValue = null;
+  let solved = null;
+
+  // Looping every sub Cell and assign a it a number
+  while (i < emptySubCells.length) {
+    // access every sub-cell by its index, so I can change it later
+    const subCell = emptySubCells[i];
+
+    // Check if the sub-cell already has a value assign
+    if (subCell.textContent === "") {
+      cellValue = 1;
+    } else {
+      cellValue = parseInt(subCell.textContent) + 1;
+    }
+
+    console.log(`sub-cell ${i} trying value ${cellValue}`);
+    solved = false;
+
+    while (cellValue <= 9) {
+      // Setting the value to the cell selected and refresh the game board
+      setCellValue(board, subCell.id, cellValue);
+      // If there is a mistake, the mistakeFlag will turn on after the refresh
+      boardDataRefresh(gameBoard);
+
+      // No mistake
+      if (!mistakeFlag) {
+        // valid value found, stop trying
+        solved = true;
+        break;
+      }
+
+      // There is a mistake
+      console.log(`mistake at sub-cell ${i}, value ${cellValue}`);
+      // Trying next value
+      cellValue++;
+    }
+
+    if (solved) {
+      // moving on to the next cell
+      i++;
+      console.log(`success ${i} out of ${emptySubCells.length}`);
+    } else {
+      // sub-cell value can't be higher than 9 => need to go back to previous index!
+      // clear current cell and refresh for the refresh flag to be off
+      setCellValue(board, subCell.id, null);
+      boardDataRefresh(gameBoard);
+
+      // go back one cell
+      i--;
+      console.log(`couldn't fix sub-cell. back to ${i}`);
+    }
+  }
+  console.log(`Board solved Successfully!`);
 }
