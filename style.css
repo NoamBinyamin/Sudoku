@@ -26,6 +26,7 @@ body {
   );
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin: 20px;
+  margin-bottom: 30px;
   border-radius: 7px;
 }
 
@@ -127,9 +128,19 @@ body {
   transition: 0.4s;
 }
 
-.credit {
-  padding: 25px;
-  font-size: 20px;
+.description {
+  padding: 30px;
+  font-size: 21px;
+  text-align: center;
+}
+
+#credit {
+  padding-top: 5px;
+}
+
+#luck {
+  font-size: 30px;
+  padding: 20px;
 }
 
 .dropdown {
